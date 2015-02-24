@@ -12,3 +12,4 @@ $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 
 header('Location: categories.php');
+die();

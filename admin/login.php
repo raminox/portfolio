@@ -10,6 +10,8 @@ if (isset($_SESSION['username'])) {
 
 require '../lib/db.php';
 require '../lib/functions.php';
+require '../lib/form.php';
+require '../lib/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -23,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (checkUser($username, $password, $connection)) {
 
         $_SESSION['username'] = $username;
+        setFlash("Vous Etes Connecter ...");
         header('Location: index.php');
         die();
 
@@ -46,15 +49,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					<form action="login.php" method="POST">
 						<div class="form-group">
 							<label for="username">Nom d'utilisateur :</label>
-							<input type="text" class="form-control" id="username" name="username" value="<?=isset($username) ? $username : '';?>">
+							<?=input('username', 'text')?>
 						</div>
 						<div class="form-group">
 							<label for="password">Mot de passe :</label>
-							<input type="password" class="form-control" id="password" name="password">
+							<!-- <input type="password" class="form-control" id="password" name="password"> -->
+							<?=input('password', 'password')?>
 						</div>
-						<button type="submit" class="btn btn-default">Se Connecter</button>
+						<!-- <button type="submit" class="btn btn-default">Se Connecter</button> -->
+						<?=input('submit', 'submit', 'Se Connecter')?>
 					</form>
-					<?=isset($status) ? $status : '';?>
 				</div>
 			</div>
 		</div>

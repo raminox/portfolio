@@ -17,16 +17,20 @@ function checkUser($username, $password, $connection)
 
 // setFlash()
 
-function setFlash($message, $type)
+/*function setFlash($message, $type)
 {
-    return "<div class='alert alert-$type' role='alert'>$message</div>";
-}
+return "<div class='alert alert-$type' role='alert'>$message</div>";
+}*/
 
 // generateCSRF() it's a function to generate CSRF Code
 
 function generateCSRF()
 {
-    $_SESSION['code-csrf'] = md5(time() + rand());
+    if (empty($_SESSION['code-csrf'])) {
+
+        $_SESSION['code-csrf'] = md5(time() + rand());
+    }
+
 }
 
 // Add CSRF
@@ -44,4 +48,12 @@ function checkCSRF()
         header('Location: csrf.php');
         die();
     }
+}
+
+// Clean String
+
+function cleanString($string = [])
+{
+    return htmlspecialchars(trim($string));
+
 }

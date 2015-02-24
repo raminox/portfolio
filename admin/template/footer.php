@@ -1,4 +1,7 @@
+<!-- End .container -->
+<footer>
 
-<script src="js/bootstarp.min.js"></script>
+
+</footer>
 </body>
 </html>

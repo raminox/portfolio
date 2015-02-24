@@ -1,11 +1,15 @@
 <?php
 
-include '../lib/functions.php';
 include '../lib/auth.php';
+include '../lib/functions.php';
 include '../lib/db.php';
+require '../lib/session.php';
+require '../lib/constants.php';
 
-$result     = $connection->query("SELECT id,name,slug FROM categories");
+$result     = $connection->query("SELECT id, name, slug FROM categories");
 $categories = $result->fetchAll();
+
+generateCSRF();
 
 include 'template/header.php';
 ?>
@@ -16,8 +20,8 @@ include 'template/header.php';
 	<br>
 	<br>
 	<br>
+<?=flash();?>
 	<p><a href="category_edit.php" class="btn btn-success">Ajouter une nouvelle categorie</a></p>
-
 	<div class="panel panel-default">
 		<!-- Default panel contents -->
 		<div class="panel-heading">Les Categories :</div>
@@ -31,20 +35,19 @@ include 'template/header.php';
 				</tr>
 			</thead>
 			<tbody>
-					<?php foreach ($categories as $category): ?>
-			<tr>
-				<td><?=$category['id'];?></td>
-				<td><?=$category['name'];?></td>
-				<td>
-					<a href="category_edit.php?id=<?=$category['id'];?>" class="btn btn-sm btn-primary">Editer</a>
-					<a href="category_remove.php?id=<?=$category['id'] . '&' . CSRF();?>" class="btn btn-sm btn-danger" onclick="return confirm('Voulez Vous Supprimer ? ')">Supprimer</a>
-				</td>
-			</tr>
-					<?php endforeach;?>
-
+				<?php foreach ($categories as $category): ?>
+				<tr>
+					<td><?=$category['id'];?></td>
+					<td><?=$category['name'];?></td>
+					<td>
+						<a href="category_edit.php?id=<?=$category['id'];?>" class="btn btn-sm btn-primary">Editer</a>
+						<a href="category_remove.php?id=<?=$category['id'] . '&' . CSRF();?>" class="btn btn-sm btn-danger" onclick="return confirm('Voulez Vous Supprimer ? ')">Supprimer</a>
+					</td>
+				</tr>
+				<?php endforeach;?>
 			</tbody>
 		</table>
-</div>
+	</div>
 </div>
 
 
