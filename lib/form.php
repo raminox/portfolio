@@ -28,3 +28,20 @@ function input($id, $type = 'text', $value = null)
             break;
     }
 }
+
+function selectInput($id, $options = [])
+{
+    $selectInput = "<select name='$id' id='$id' class='form-control' >";
+
+    foreach ($options as $option_id => $value) {
+        $selected = '';
+        if (isset($_POST[$id]) && $option_id == $_POST[$id]) {
+            $selected = 'selected="selected"';
+        }
+        $selectInput .= "<option value='$option_id' $selected>$value</option>";
+    }
+
+    $selectInput .= "</select>";
+
+    return $selectInput;
+}

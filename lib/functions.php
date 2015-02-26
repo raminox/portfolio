@@ -15,13 +15,6 @@ function checkUser($username, $password, $connection)
 
 }
 
-// setFlash()
-
-/*function setFlash($message, $type)
-{
-return "<div class='alert alert-$type' role='alert'>$message</div>";
-}*/
-
 // generateCSRF() it's a function to generate CSRF Code
 
 function generateCSRF()
