@@ -21,7 +21,7 @@ include 'template/header.php';
 	<br>
 	<br>
 <?=flash();?>
-	<p><a href="work_edit.php" class="btn btn-success">Ajouter une nouvelle categorie</a></p>
+	<p><a href="work_edit.php" class="btn btn-success">Ajouter une nouvelle réalisation</a></p>
 	<div class="panel panel-default">
 		<!-- Default panel contents -->
 		<div class="panel-heading">Les works :</div>

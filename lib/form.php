@@ -18,6 +18,9 @@ function input($id, $type = 'text', $value = null)
             $value = isset($_POST[$id]) ? $_POST[$id] : '';
             return "<textarea type='text' class='form-control' id='$id' name='$id'>$value</textarea>";
             break;
+        case 'file':
+            return "<input type='file' class='form-control' id='$id' name='$id'>";
+            break;
 
         case 'submit':
             return "<input type='$type' class='btn btn-default' name='$id' value='$value'>";
