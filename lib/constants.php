@@ -1,6 +1,6 @@
 <?php
 
-define('WEBROOT', basename(dirname($_SERVER['SCRIPT_NAME'])));
+define('WEB_ROOT', dirname(dirname($_SERVER['SCRIPT_NAME'])));
 
 define('WWW_ROOT', dirname(dirname(__FILE__)));
 
