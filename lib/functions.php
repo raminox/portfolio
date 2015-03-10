@@ -50,3 +50,12 @@ function cleanString($string = [])
     return htmlspecialchars(trim($string));
 
 }
+
+function arrayConvert($input_array)
+{
+    $output_array = [];
+    foreach ($input_array as $key => $input_value) {
+        $output_array = $input_value;
+    }
+    return $output_array;
+}

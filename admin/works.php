@@ -6,8 +6,7 @@ include '../lib/db.php';
 require '../lib/session.php';
 require '../lib/constants.php';
 
-$result = $connection->query("SELECT id, name, slug FROM works");
-$works  = $result->fetchAll();
+$works = select(['id', 'name', 'slug'], 'works', $connection);
 
 generateCSRF();
 

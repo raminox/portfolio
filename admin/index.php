@@ -1,6 +1,7 @@
 <?php
 include '../lib/auth.php';
 require '../lib/session.php';
+require '../lib/constants.php';
 include 'template/header.php';
 ?>
 
@@ -10,6 +11,11 @@ include 'template/header.php';
 <br>
 <br>
 <?=flash();?>
+
+<?php
+// var_dump(WEB_ROOT);
+// var_dump($directory);
+?>
 <?php include '../lib/debug.php';?>
 </div>
 

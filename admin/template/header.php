@@ -11,7 +11,7 @@
 	<body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-header">
-		<a href="" class="navbar-brand">My Portfolio</a>
+		<a href="<?=WEB_ROOT?>" class="navbar-brand">My Portfolio</a>
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 		<p class="navbar-text pull-right">Signed in as <a href="#" class="navbar-link">
@@ -19,11 +19,11 @@
 		</a>
 		</p>
 		<ul class="nav navbar-nav navbar-left">
-			<li class="active"><a href="#">Home</a></li>
+			<li><a href="<?=WEB_ROOT;?>">Home</a></li>
 			<li><a href="#about">About</a></li>
 			<li><a href="#contact">Contact</a></li>
-			<li><a href="categories.php">Categories</a></li>
-			<li><a href="works.php">Realisation</a></li>
+			<li><a href="<?=WEB_ROOT;?>admin/categories.php">Categories</a></li>
+			<li><a href="<?=WEB_ROOT;?>admin/works.php">Realisation</a></li>
 		</ul>
 	</div>
 </div>

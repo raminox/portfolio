@@ -75,3 +75,13 @@ function resizeImage($file, $width, $height, $quality = 100)
 
     return true;
 }
+
+function resizedName($image_name)
+{
+
+    $info        = pathinfo(IMAGES_DIR . "/" . $image_name);
+    $image_thumb = implode("", glob(IMAGES_DIR . "/" . $info['filename'] . "_*x*" . $info['extension']));
+    $image_thumb = pathinfo($image_thumb, PATHINFO_FILENAME) . "." . pathinfo($image_thumb, PATHINFO_EXTENSION);
+
+    return $image_thumb;
+}

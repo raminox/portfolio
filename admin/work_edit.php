@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $work_name        = cleanString($_POST['name']);
     $work_slug        = cleanString($_POST['slug']);
-    $work_content     = cleanString($_POST['content']);
+    $work_content     = $_POST['content'];
     $work_category_id = (int) cleanString($_POST['category_id']);
 
     if (isset($work_name) && isset($work_slug) && isset($work_content)) {
@@ -174,6 +174,24 @@ if (isset($_GET['id'])) {
     $images = [];
 }
 
+/**
+ * Hightlighting Image
+ */
+
+if (isset($_GET['highlight_image'])) {
+
+    $work_id  = $_GET['id'];
+    $image_id = $_GET['highlight_image'];
+
+    $hightlight = $connection->prepare('UPDATE works SET image_id = :image_id WHERE id = :work_id');
+    $hightlight->bindValue(':image_id', $image_id, PDO::PARAM_INT);
+    $hightlight->bindValue(':work_id', $work_id, PDO::PARAM_INT);
+    $hightlight->execute();
+    header('Location: work_edit.php?id=' . $work_id);
+    die();
+
+}
+
 require_once 'template/header.php';
 ?>
 <div class="container">
@@ -219,16 +237,24 @@ require_once 'template/header.php';
         </div>
         <div class="col-sm-4">
             <?php foreach ($images as $key => $image): ?>
-            <div class="col-xs-4 ">
-                <a href="?delete_image=<?=$image['id'] . "&" . CSRF()?>" onclick= "return confirm('Vous voulez vraimment de supprimer l\'image')" class="thumbnail">
-                    <img src="<?=WEB_ROOT . "/works/images/" . $image['name'];?>" alt="Photo de realisation">
-                </a>
+            <div class="col-xs-4 thumbnail">
+                <img src="<?=WEB_ROOT . "/works/images/" . $image['name'];?>" alt="Photo de realisation">
+                <ul class="pager">
+                    <li>
+                        <a href="?delete_image=<?=$image['id'] . "&" . CSRF()?>" onclick= "return confirm('Vous voulez vraimment de supprimer l\'image')">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true" class="previous"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?highlight_image=<?=$image['id'] . '&id=' . $_GET['id'] . "&" . CSRF();?>"><span class="glyphicon glyphicon-bookmark" aria-hidden="true" class="next"></span></a>
+                    </li>
+                </ul>
             </div>
             <?php endforeach;?>
         </div>
     </div>
-
 </div>
+
 <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script>

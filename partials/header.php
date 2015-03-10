@@ -4,9 +4,9 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title></title>
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="<?=WEB_ROOT?>/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?=WEB_ROOT?>/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="<?=WEB_ROOT?>/css/style.css">
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top">

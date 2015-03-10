@@ -8,9 +8,7 @@ checkCSRF();
 
 $id = htmlspecialchars($_GET['id']);
 
-$stmt = $connection->prepare("DELETE FROM works WHERE id = :id ");
-$stmt->bindValue(':id', $id, PDO::PARAM_INT);
-$stmt->execute();
+delete('works', $id, $connection);
 
 header('Location: works.php');
 die();
