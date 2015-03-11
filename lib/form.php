@@ -9,6 +9,10 @@ function input($id, $type = 'text', $value = null)
             $value = isset($_POST[$id]) ? $_POST[$id] : '';
             return "<input type='$type' class='form-control' id='$id' name='$id' value ='$value'>";
             break;
+        case 'email':
+            $value = isset($_POST[$id]) ? $_POST[$id] : '';
+            return "<input type='$type' class='form-control' id='$id' name='$id' value ='$value'>";
+            break;
 
         case 'password':
             return "<input type='$type' class='form-control' id='$id' name='$id'>";
@@ -23,7 +27,7 @@ function input($id, $type = 'text', $value = null)
             break;
 
         case 'submit':
-            return "<input type='$type' class='btn btn-default' name='$id' value='$value'>";
+            return "<button type='submit' class='btn btn-default'>$value</button>";
             break;
 
         default:
@@ -35,6 +39,7 @@ function input($id, $type = 'text', $value = null)
 function selectInput($id, $options = [])
 {
     $selectInput = "<select name='$id' id='$id' class='form-control' >";
+    $selectInput .= "<option value=''>chose service</option>";
 
     foreach ($options as $option_id => $value) {
         $selected = '';

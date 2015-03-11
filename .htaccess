@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^realisation/([a-z0-9]+)$ view.php?slug=$1

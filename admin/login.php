@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="../css/style.css">
+		<link rel="stylesheet" href="../css/login.css">
 	</head>
 	<body>
 		<div class="container">
@@ -53,10 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						</div>
 						<div class="form-group">
 							<label for="password">Mot de passe :</label>
-							<!-- <input type="password" class="form-control" id="password" name="password"> -->
 							<?=input('password', 'password')?>
 						</div>
-						<!-- <button type="submit" class="btn btn-default">Se Connecter</button> -->
 						<?=input('submit', 'submit', 'Se Connecter')?>
 					</form>
 				</div>
