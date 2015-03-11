@@ -6,8 +6,7 @@ include '../lib/db.php';
 require '../lib/session.php';
 require '../lib/constants.php';
 
-$result     = $connection->query("SELECT id, name, slug FROM categories");
-$categories = $result->fetchAll();
+$categories = select(['id', 'name', 'slug'], 'categories', $connection);
 
 generateCSRF();
 

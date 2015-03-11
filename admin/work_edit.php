@@ -25,27 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_GET['id'])) {
 
                 $work_id = (int) $_GET['id'];
-                $update  = 'UPDATE works SET name = :work_name, slug = :work_slug, content = :work_content, category_id = :work_category_id WHERE id  = :id';
-                $stmt    = $connection->prepare($update);
-                $stmt->bindValue(':work_name', $work_name, PDO::PARAM_STR);
-                $stmt->bindValue(':work_slug', $work_slug, PDO::PARAM_STR);
-                $stmt->bindValue(':work_content', $work_content, PDO::PARAM_STR);
-                $stmt->bindValue(':work_category_id', $work_category_id, PDO::PARAM_INT);
-                $stmt->bindValue(':id', $work_id, PDO::PARAM_INT);
-                $stmt->execute();
-
+                update(['name' => $work_name, 'slug' => $work_slug, 'content' => $work_content, 'category_id' => $work_category_id], 'works', $work_id, $connection);
                 setFlash("La realisation $work_name a ete modefie avec success");
 
             } else {
 
-                $insert = "INSERT INTO works SET name = :work_name , slug = :work_slug, category_id = :work_category_id, content = :work_content";
-                $stmt   = $connection->prepare($insert);
-                $stmt->bindValue(':work_name', $work_name, PDO::PARAM_STR);
-                $stmt->bindValue(':work_slug', $work_slug, PDO::PARAM_STR);
-                $stmt->bindValue(':work_category_id', $work_category_id, PDO::PARAM_STR);
-                $stmt->bindValue(':work_content', $work_content, PDO::PARAM_STR);
-                $stmt->execute();
-                $_GET['id'] = $connection->lastInsertId();
+                $_GET['id'] = insert(['name' => $work_name, 'slug' => $work_slug, 'category_id' => $work_category_id, 'content' => $work_content], 'works', $connection);
+
             }
 
             setFlash("La realisation $work_name a ete ajouter avec success");
@@ -65,11 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $extension      = pathinfo($work_image['name'], PATHINFO_EXTENSION);
                 $extension_list = ['jpg', 'jpeg', 'png'];
                 if (in_array($extension, $extension_list)) {
+
                     $image_name = rand() . '_' . $work_id . '_IMG.' . $extension;
-                    $stmt       = $connection->prepare('INSERT INTO images SET work_id = :work_id, name = :image_name');
-                    $stmt->bindValue(':work_id', $work_id, PDO::PARAM_INT);
-                    $stmt->bindValue(':image_name', $image_name, PDO::PARAM_STR);
-                    $stmt->execute();
+                    insert(['work_id' => $work_id, 'name' => $image_name], 'images', $connection);
                     move_uploaded_file($work_image['tmp_name'], IMAGES_DIR . "/" . $image_name);
 
                     resizeImage(IMAGES_DIR . "/" . $image_name, 150, 150);
@@ -89,13 +73,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 if (isset($_GET['id'])) {
 
-    $id   = cleanString($_GET['id']);
-    $stmt = $connection->prepare("SELECT id, name, slug, content, category_id FROM works WHERE id = :id");
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    $result = $stmt->execute();
-    $count  = $stmt->rowCount();
+    $id   = (int) cleanString($_GET['id']);
+    $work = select(['id', 'name', 'slug', 'content', 'category_id'], 'works', $connection, $id);
 
-    if ($count == 0) {
+    if (count($work) == 0) {
 
         setFlash("La realisation Selectionne n'exesste pas", 'danger');
         header('Location: works.php');
@@ -103,8 +84,7 @@ if (isset($_GET['id'])) {
 
     } else {
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $_POST  = $result;
+        $_POST = arrayConvert($work);
     }
 }
 
@@ -113,12 +93,12 @@ if (isset($_GET['id'])) {
 /*========================================================
 =            Section for categories name list            =
 ========================================================*/
-$select          = $connection->query("SELECT id, name FROM categories ORDER BY name ASC");
-$categories      = $select->fetchAll();
-$categories_list = [];
+$categories = select(['id', 'name'], 'categories', $connection);
+
 foreach ($categories as $category) {
     $categories_list[$category['id']] = $category['name'];
 }
+
 /*-----  End of Section for categories name list  ------*/
 
 /**
@@ -128,12 +108,9 @@ if (isset($_GET['delete_image'])) {
 
     checkCSRF();
 
-    $image_id = cleanString($_GET['delete_image']);
-
-    $select_stmt = $connection->prepare("SELECT name, work_id FROM images WHERE id = :image_id");
-    $select_stmt->bindValue(':image_id', $image_id, PDO::PARAM_INT);
-    $select_stmt->execute();
-    $select_image = $select_stmt->fetch();
+    $image_id     = cleanString($_GET['delete_image']);
+    $select_stmt  = select(['name', 'work_id'], 'images', $connection, $image_id);
+    $select_image = arrayConvert($select_stmt);
 
     $selected_image = IMAGES_DIR . "/" . $select_image['name'];
 
@@ -149,9 +126,7 @@ if (isset($_GET['delete_image'])) {
         unlink($image_thumb);
     }
 
-    $stmt = $connection->prepare("DELETE FROM images WHERE id = :image_id");
-    $stmt->bindValue(':image_id', $image_id, PDO::PARAM_INT);
-    $stmt->execute();
+    delete('images', ['id' => $image_id], $connection);
 
     header('Location: work_edit.php?id=' . $select_image['work_id']);
     die();
@@ -164,11 +139,8 @@ if (isset($_GET['delete_image'])) {
 
 if (isset($_GET['id'])) {
 
-    $work_id = cleanString($_GET['id']);
-    $stmt    = $connection->prepare("SELECT id, name FROM images WHERE work_id = :work_id");
-    $stmt->bindValue(':work_id', $work_id, PDO::PARAM_INT);
-    $stmt->execute();
-    $images = $stmt->fetchAll();
+    $work_id = (int) cleanString($_GET['id']);
+    $images  = select(['id', 'name'], 'images', $connection, ['work_id' => $work_id]);
 
 } else {
     $images = [];
@@ -180,13 +152,9 @@ if (isset($_GET['id'])) {
 
 if (isset($_GET['highlight_image'])) {
 
-    $work_id  = $_GET['id'];
-    $image_id = $_GET['highlight_image'];
-
-    $hightlight = $connection->prepare('UPDATE works SET image_id = :image_id WHERE id = :work_id');
-    $hightlight->bindValue(':image_id', $image_id, PDO::PARAM_INT);
-    $hightlight->bindValue(':work_id', $work_id, PDO::PARAM_INT);
-    $hightlight->execute();
+    $work_id    = $_GET['id'];
+    $image_id   = $_GET['highlight_image'];
+    $hightlight = update(['image_id' => $image_id], 'works', $work_id, $connection);
     header('Location: work_edit.php?id=' . $work_id);
     die();
 
@@ -238,7 +206,7 @@ require_once 'template/header.php';
         <div class="col-sm-4">
             <?php foreach ($images as $key => $image): ?>
             <div class="col-xs-4 thumbnail">
-                <img src="<?=WEB_ROOT . "/works/images/" . $image['name'];?>" alt="Photo de realisation">
+                <img src="<?=WEB_ROOT . "works/images/" . $image['name'];?>" alt="Photo de realisation" width='125' height='125'>
                 <ul class="pager">
                     <li>
                         <a href="?delete_image=<?=$image['id'] . "&" . CSRF()?>" onclick= "return confirm('Vous voulez vraimment de supprimer l\'image')">
