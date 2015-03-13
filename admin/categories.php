@@ -21,9 +21,11 @@ include 'template/header.php';
 	<br>
 <?=flash();?>
 	<p><a href="category_edit.php" class="btn btn-success">Ajouter une nouvelle categorie</a></p>
-	<div class="panel panel-default">
+
+		<?php if (count($categories) > 0): ?>
+			<div class="panel panel-default">
 		<!-- Default panel contents -->
-		<div class="panel-heading">Les Categories :</div>
+			<div class="panel-heading">Les Categories :</div>
 		<!-- Table -->
 		<table class="table table-striped">
 			<thead>
@@ -46,6 +48,9 @@ include 'template/header.php';
 				<?php endforeach;?>
 			</tbody>
 		</table>
+	<?php else: ?>
+<div class="alert alert-danger" role="alert">Sorry there is no categories to display</div>
+	<?php endif;?>
 	</div>
 </div>
 

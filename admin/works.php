@@ -21,7 +21,8 @@ include 'template/header.php';
 	<br>
 <?=flash();?>
 	<p><a href="work_edit.php" class="btn btn-success">Ajouter une nouvelle réalisation</a></p>
-	<div class="panel panel-default">
+	<?php if (count($works) > 0): ?>
+<div class="panel panel-default">
 		<!-- Default panel contents -->
 		<div class="panel-heading">Les works :</div>
 		<!-- Table -->
@@ -47,6 +48,9 @@ include 'template/header.php';
 			</tbody>
 		</table>
 	</div>
+	<?php else: ?>
+		<div class="alert alert-danger" role="alert">Sorry there is no realizations to display</div>
+	<?php endif;?>
 </div>
 
 

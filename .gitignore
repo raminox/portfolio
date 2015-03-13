@@ -1,0 +1,5 @@
+works/images/*.jpg
+works/images/*.jpeg
+works/images/*.png
+
+/vendor/

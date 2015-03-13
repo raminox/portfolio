@@ -15,9 +15,10 @@
 			</div>
 			<div id="navbar" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="#contact">Contact</a></li>
+					<li><a href="<?=WEB_ROOT?>">Home</a></li>
+					<li><a href="<?=WEB_ROOT?>realisation">Realizations</a></li>
+					<li><a href="<?=WEB_ROOT?>profile.php">About</a></li>
+					<li><a href="<?=WEB_ROOT?>contact.php">Contact</a></li>
 				</ul>
 				</div>
 			</div>
