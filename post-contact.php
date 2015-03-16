@@ -41,11 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         mail('contact@devlab.local', 'Mon Sujet', $message);
         insert(['sender_name' => $name, 'sender_email' => $email, 'service' => $service_email, 'message' => $message], 'messages', $connection);
-
         setFlash('Thank you, your message sent successfully');
-        var_dump($service_email);
-        //header('Location: contact.php');
-        //die();
+        header('Location: contact.php');
+        die();
 
     }
 

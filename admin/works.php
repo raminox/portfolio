@@ -1,57 +1,13 @@
 <?php
 
-include '../lib/auth.php';
-include '../lib/functions.php';
-include '../lib/db.php';
-require '../lib/session.php';
-require '../lib/constants.php';
+require_once '../lib/auth.php';
+require_once '../lib/functions.php';
+require_once '../lib/db.php';
+require_once '../lib/session.php';
+require_once '../lib/constants.php';
 
 $works = select(['id', 'name', 'slug'], 'works', $connection);
 
 generateCSRF();
 
-include 'template/header.php';
-?>
-
-
-<div class="container">
-	<br>
-	<br>
-	<br>
-	<br>
-<?=flash();?>
-	<p><a href="work_edit.php" class="btn btn-success">Ajouter une nouvelle réalisation</a></p>
-	<?php if (count($works) > 0): ?>
-<div class="panel panel-default">
-		<!-- Default panel contents -->
-		<div class="panel-heading">Les works :</div>
-		<!-- Table -->
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Nom</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($works as $work): ?>
-				<tr>
-					<td><?=$work['id'];?></td>
-					<td><?=$work['name'];?></td>
-					<td>
-						<a href="work_edit.php?id=<?=$work['id'];?>" class="btn btn-sm btn-primary">Editer</a>
-						<a href="work_remove.php?id=<?=$work['id'] . '&' . CSRF();?>" class="btn btn-sm btn-danger" onclick="return confirm('Voulez Vous Supprimer ? ')">Supprimer</a>
-					</td>
-				</tr>
-				<?php endforeach;?>
-			</tbody>
-		</table>
-	</div>
-	<?php else: ?>
-		<div class="alert alert-danger" role="alert">Sorry there is no realizations to display</div>
-	<?php endif;?>
-</div>
-
-
-<?php include '../partials/footer.php';?>
+view('works', $works = ['works' => $works]);

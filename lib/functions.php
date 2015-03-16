@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * [checkUser description]
+ * @param  [type] $username   [description]
+ * @param  [type] $password   [description]
+ * @param  [type] $connection [description]
+ * @return [type]             [description]
+ */
 function checkUser($username, $password, $connection)
 {
 
@@ -15,8 +22,10 @@ function checkUser($username, $password, $connection)
 
 }
 
-// generateCSRF() it's a function to generate CSRF Code
-
+/**
+ * [generateCSRF description]
+ * @return [type] [description]
+ */
 function generateCSRF()
 {
     if (empty($_SESSION['code-csrf'])) {
@@ -26,15 +35,18 @@ function generateCSRF()
 
 }
 
-// Add CSRF
-
+/**
+ * [CSRF description]
+ */
 function CSRF()
 {
     return 'csrf=' . $_SESSION['code-csrf'];
 }
 
-// Verifiy the CSRF code
-
+/**
+ * [checkCSRF description]
+ * @return [type] [description]
+ */
 function checkCSRF()
 {
     if (empty($_GET['csrf']) || $_GET['csrf'] != $_SESSION['code-csrf']) {
@@ -43,14 +55,22 @@ function checkCSRF()
     }
 }
 
-// Clean String
-
+/**
+ * [cleanString description]
+ * @param  [type] $string [description]
+ * @return [type]         [description]
+ */
 function cleanString($string = [])
 {
     return htmlspecialchars(trim($string));
 
 }
 
+/**
+ * [arrayConvert description]
+ * @param  [type] $input_array [description]
+ * @return [type]              [description]
+ */
 function arrayConvert($input_array)
 {
     $output_array = [];
@@ -58,4 +78,13 @@ function arrayConvert($input_array)
         $output_array = $input_value;
     }
     return $output_array;
+}
+
+function view($path_name, $data = null)
+{
+    if ($data) {
+        extract($data);
+    }
+    $path_name .= ".view.php";
+    include '../admin/views/layout.php';
 }

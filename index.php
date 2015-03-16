@@ -36,3 +36,4 @@ require_once 'partials/header.php';
 </div>
 
 <!-- End .container -->
+<?php require_once 'partials/footer.php';?>

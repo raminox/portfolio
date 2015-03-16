@@ -12,11 +12,9 @@ include 'template/header.php';
 <br>
 <?=flash();?>
 
-<?php
-// var_dump(WEB_ROOT);
-// var_dump($directory);
-?>
 <?php include '../lib/debug.php';?>
+
+
 </div>
 
 
