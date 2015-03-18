@@ -155,9 +155,10 @@ if (isset($_GET['highlight_image'])) {
     $work_id    = $_GET['id'];
     $image_id   = $_GET['highlight_image'];
     $hightlight = update(['image_id' => $image_id], 'works', $work_id, $connection);
+    setFlash("La photo selectionne a ete mise a la une");
     header('Location: work_edit.php?id=' . $work_id);
     die();
 
 }
 
-view('work_edit', $work = ['work' => $work, 'images' => $images, 'categories_list' => $categories_list]);
+view('work_edit', $work = ['images' => $images, 'categories_list' => $categories_list]);

@@ -58,17 +58,3 @@
         </div>
     </div>
 </div>
-
-<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script>
-(function($){
-$('#copybtn').click(function(e) {
-e.preventDefault();
-var $clone = $('#copyinput').clone().attr('id', '').removeClass('hidden');
-$('#copyinput').before($clone);
-});
-})(jQuery);
-$(alert-success).delay(20).slideUp(20);
-tinymce.init({selector:'textarea'});
-</script>

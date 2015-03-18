@@ -1,11 +1,11 @@
 <?php
 
-include '../lib/functions.php';
-include '../lib/auth.php';
-include '../lib/db.php';
-require '../lib/form.php';
-require '../lib/constants.php';
-require '../lib/session.php';
+require_once '../lib/auth.php';
+require_once '../lib/functions.php';
+require_once '../lib/db.php';
+require_once '../lib/form.php';
+require_once '../lib/constants.php';
+require_once '../lib/session.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
